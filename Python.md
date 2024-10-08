@@ -130,7 +130,7 @@ Check them out now!
  6. Scikit-learn https://lnkd.in/gGfkNu5i
  7. TensorFlow : https://lnkd.in/g3fw3uRV
  8. Keras : https://lnkd.in/gfPTfbgg
- 9. PyTorch https://bit.ly/3lnsiIz
+ 9. PyTorch  
 10. SQL : https://lnkd.in/gnwe4qcb
 11. R : https://lnkd.in/gEgJ6A8j
 12. Git : https://education.github.com/git-cheat-sheet-education.pdf
