@@ -1,4 +1,26 @@
-# service mesh
+# Service Mesh
+
+## Table of Contents
+
+- [Service Mesh](#service-mesh)
+  - [Table of Contents](#table-of-contents)
+  - [What is a service mesh?](#what-is-a-service-mesh)
+  - [Is Istio and Envoy same?](#is-istio-and-envoy-same)
+  - [is service mesh and api gateway same?](#is-service-mesh-and-api-gateway-same)
+  - [What does Galley do in Istio?](#what-does-galley-do-in-istio)
+  - [What does Pilot do in Istio?](#what-does-pilot-do-in-istio)
+  - [Is a service mesh already implamented in kubernete?](#is-a-service-mesh-already-implamented-in-kubernete)
+  - [Should I create it to internal communications between microservices?](#should-i-create-it-to-internal-communications-between-microservices)
+    - [Advantages of Using a Service Mesh](#advantages-of-using-a-service-mesh)
+    - [Considerations Before Implementing a Service Mesh](#considerations-before-implementing-a-service-mesh)
+    - [When to Use a Service Mesh](#when-to-use-a-service-mesh)
+    - [When to Avoid a Service Mesh](#when-to-avoid-a-service-mesh)
+    - [Conclusion](#conclusion)
+  - [Video](#video)
+  - [InfoQ](#infoq)
+  - [Pilot](#pilot)
+  - [Envoy](#envoy)
+    - [Videos](#videos)
 
 ## What is a service mesh?
 
@@ -73,6 +95,53 @@ Some of the key functions and responsibilities of Pilot within Istio include:
 4. **Telemetry and Monitoring**: It collects telemetry data from the Envoy proxies and provides insights into the behavior and performance of the services in the mesh, facilitating monitoring, logging, and troubleshooting activities.
 
 In summary, Pilot acts as the control plane component in Istio that is responsible for managing the configuration and behavior of the data plane proxies. It enables dynamic service discovery, sophisticated traffic management, and resiliency features, contributing to the overall reliability and performance of the Istio service mesh.
+
+## Is a service mesh already implamented in kubernete? 
+
+A service mesh is not built into Kubernetes by default. However, Kubernetes provides the necessary infrastructure to implement a service mesh. Popular service mesh implementations that can be integrated with Kubernetes include:
+
+1. **Istio**: One of the most widely used service meshes, providing advanced traffic management, security, and observability features.
+2. **Linkerd**: A lightweight and performant service mesh that focuses on simplicity and ease of use.
+3. **Consul Connect**: Part of HashiCorp's Consul, it offers service discovery and segmentation capabilities.
+4. **Open Service Mesh (OSM)**: A lightweight and extensible service mesh that follows the Service Mesh Interface (SMI) specification.
+
+These service meshes are deployed on top of Kubernetes clusters and utilize its capabilities to manage and control microservices communication, adding features like load balancing, service discovery, fault tolerance, and security policies.
+
+## Should I create it to internal communications between microservices?
+
+Implementing a service mesh for internal communications between microservices can be highly beneficial, but it's important to consider whether the benefits align with your specific needs and environment. Here are some advantages and considerations to help you decide:
+
+### Advantages of Using a Service Mesh
+
+1. **Traffic Management**: Advanced routing capabilities, including blue-green deployments, canary releases, and traffic mirroring.
+2. **Observability**: Enhanced monitoring, tracing, and logging for better insight into the interactions between services.
+3. **Security**: mTLS (mutual Transport Layer Security) for encrypted communication between services, along with policies for access control.
+4. **Resilience**: Fault injection, retries, and circuit breaking to improve the reliability and robustness of service communication.
+5. **Policy Enforcement**: Consistent application of policies across microservices for security, traffic management, and observability.
+
+### Considerations Before Implementing a Service Mesh
+
+1. **Complexity**: Service meshes add an additional layer of complexity to your architecture. Ensure your team has the necessary expertise to manage and troubleshoot it.
+2. **Performance Overhead**: While service meshes offer many features, they can introduce latency and resource overhead. Evaluate if your system can tolerate this.
+3. **Requirements**: If your application is simple or doesn't require advanced traffic management, observability, or security features, the overhead might not be justified.
+4. **Cost**: Consider the cost of running the service mesh components and the potential increase in resource usage.
+
+### When to Use a Service Mesh
+
+- **Microservices Architecture**: If you have a complex microservices architecture with many services interacting with each other.
+- **High Security Needs**: If you require stringent security policies for inter-service communication.
+- **Need for Observability**: If you need detailed observability into service-to-service communications for monitoring and debugging.
+- **Traffic Management Needs**: If you need sophisticated traffic management and load balancing capabilities.
+
+### When to Avoid a Service Mesh
+
+- **Simple Applications**: If your application is relatively simple with few services and straightforward communication patterns.
+- **Early Stages**: If you are in the early stages of adopting microservices and still ironing out basic communication patterns and infrastructure.
+- **Resource Constraints**: If you have significant resource constraints and can't afford the additional overhead.
+
+### Conclusion
+
+If the benefits of improved traffic management, security, observability, and resilience outweigh the added complexity and overhead, implementing a service mesh for internal communications between microservices can be very advantageous. However, if your system is simple or you are not ready to manage the additional complexity, it might be best to start with basic Kubernetes networking features and gradually adopt a service mesh as your needs grow.
 
 ## Video
  * [What is Istio? - IBM](https://www.youtube.com/watch?v=1iyFq2VaL5Y)

@@ -1,5 +1,27 @@
 # Java Records & Projections
 
+## Table of Contents
+
+- [Java Records \& Projections](#java-records--projections)
+  - [Table of Contents](#table-of-contents)
+  - [Records](#records)
+    - [Java Records: When \& Why to use them](#java-records-when--why-to-use-them)
+  - [Lombok](#lombok)
+    - [Lombok can create constructors, getters, equals(), hashCode(), and toString() methods automatically.](#lombok-can-create-constructors-getters-equals-hashcode-and-tostring-methods-automatically)
+    - [If you really insist on using Lombok](#if-you-really-insist-on-using-lombok)
+      - [Example without `@Data`](#example-without-data)
+      - [Breakdown](#breakdown)
+      - [Benefits](#benefits)
+      - [Example with Field Access](#example-with-field-access)
+      - [Conclusion](#conclusion)
+  - [Projections](#projections)
+    - [How you can use projections with Spring Data JPA?](#how-you-can-use-projections-with-spring-data-jpa)
+    - [Any completement from this article https://medium.com/@bubu.tripathy/spring-data-jpa-projections-cc5f9289089f](#any-completement-from-this-article-httpsmediumcombubutripathyspring-data-jpa-projections-cc5f9289089f)
+  - [JPA does not require setters/getters anymore.](#jpa-does-not-require-settersgetters-anymore)
+    - [Key Points](#key-points)
+    - [Pros and Cons](#pros-and-cons)
+  - [References](#references)
+
 ## Records
 
 ### Java Records: When & Why to use them
@@ -28,6 +50,8 @@ Why do we need Java records?
 
 Overall, Java records provide a more concise and readable way to define classes that are essentially just containers for data, reducing the verbosity and boilerplate typically associated with such classes in Java.
 
+## Lombok 
+
 ### Lombok can create constructors, getters, equals(), hashCode(), and toString() methods automatically.
 
 Yes, you're correct. Lombok is a popular library in the Java ecosystem that helps reduce boilerplate code by automatically generating common methods like constructors, getters, setters, `equals()`, `hashCode()`, and `toString()` methods. It achieves this through the use of annotations.
@@ -55,6 +79,71 @@ While Lombok and Java records both address the issue of boilerplate code, they h
 3. **Standardization**: Java records are a standardized language feature, meaning they have clear semantics defined by the Java language specification. Lombok, being a library, is not part of the official Java specification and may have differences in behavior or compatibility across different versions or implementations.
 
 Both Java records and Lombok provide ways to reduce boilerplate code, and the choice between them often depends on factors such as project requirements, team preferences, and compatibility concerns.
+
+### If you really insist on using Lombok
+
+Absolutely, I understand the concerns regarding the `@Data` annotation in Lombok. Using `@Data` can indeed be overkill as it generates more than just getters and setters; it includes equals, hashCode, and toString methods, which might not always be desirable.
+
+Instead, Lombok offers more fine-grained annotations such as `@Getter`, `@Setter`, `@NoArgsConstructor`, and `@AllArgsConstructor`, which allow you to generate only what you need. This provides better control and prevents the unnecessary generation of potentially harmful methods.
+
+#### Example without `@Data`
+
+Here’s how you can use Lombok without `@Data` to ensure you only generate what’s necessary:
+
+```java
+import lombok.Getter;
+import lombok.Setter;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
+public class Person {
+    @Id
+    @Getter @Setter
+    private Long id;
+
+    @Getter @Setter
+    private String name;
+}
+```
+
+#### Breakdown
+
+- `@Getter` and `@Setter`: These annotations are used to generate only the getter and setter methods for each field.
+- `@NoArgsConstructor`: Generates a no-argument constructor.
+- `@AllArgsConstructor`: Generates a constructor with one argument for each field in the class.
+
+#### Benefits
+
+- **Control**: By using specific Lombok annotations, you have better control over what methods are generated.
+- **Simplicity**: Only the necessary methods are generated, reducing potential issues with unintentional method generation.
+- **Maintainability**: The class remains clean and maintainable without unnecessary boilerplate code.
+
+#### Example with Field Access
+
+If you prefer to avoid using Lombok entirely and rely on field access with JPA, here’s how you can structure your entity:
+
+```java
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+public class Person {
+    @Id
+    private Long id;
+    private String name;
+
+    // No explicit getters and setters needed if you use field access with JPA
+}
+```
+
+#### Conclusion
+
+While Lombok can simplify code by reducing boilerplate, it’s important to use it judiciously. Avoiding `@Data` in favor of more specific annotations like `@Getter` and `@Setter` provides better control and adheres to good coding practices. For projects where you want even more control or to avoid dependencies, relying on JPA's field access can be a viable option.
 
 ## Projections
 
@@ -126,8 +215,76 @@ The article you provided offers a detailed explanation of projections in Spring 
 
 Overall, the article provides a comprehensive overview of projections in Spring Data JPA and demonstrates various techniques for defining and using projections effectively in your applications.
 
-## References
+## JPA does not require setters/getters anymore.
 
+Java Persistence API (JPA) traditionally required the use of getters and setters for mapping entity fields to database columns. However, recent updates and best practices have evolved, providing more flexibility. As of the latest versions and with the adoption of more advanced frameworks like Hibernate, Lombok, and records in Java, explicit getters and setters are not strictly necessary in all cases.
+
+### Key Points
+
+1. **Default Access Type**: JPA can use field access rather than property access. This means it can directly access fields via reflection without requiring getters and setters.
+
+    ```java
+    @Entity
+    public class Person {
+        @Id
+        private Long id;
+        
+        private String name;
+
+        // Getters and setters are not strictly required
+    }
+    ```
+
+2. **Lombok**: Lombok can generate getters, setters, and other boilerplate code at compile-time, making the source code cleaner and easier to maintain.
+
+    ```java
+    @Entity
+    @Data
+    public class Person {
+        @Id
+        private Long id;
+        
+        private String name;
+    }
+    ```
+
+    The `@Data` annotation generates all the necessary getters and setters among other things.
+
+3. **Records**: Java 14 introduced records, which are a concise way to model immutable data classes. JPA support for records is improving, although it may not be fully integrated into all JPA providers yet.
+
+    ```java
+    @Entity
+    public record Person(@Id Long id, String name) {}
+    ```
+
+4. **Direct Field Access**: Some JPA providers allow direct access to fields. By using annotations on fields instead of methods, you can avoid the need for explicit getters and setters.
+
+    ```java
+    @Entity
+    public class Person {
+        @Id
+        private Long id;
+        
+        @Column(name = "name")
+        private String name;
+    }
+    ```
+
+### Pros and Cons
+
+- **Pros**:
+  - **Cleaner Code**: Reduces boilerplate code, making the codebase cleaner and more readable.
+  - **Performance**: Direct field access can be slightly faster since it avoids the overhead of method calls.
+  - **Simplicity**: Easier for small projects or when using advanced features like Lombok or records.
+
+- **Cons**:
+  - **Encapsulation**: Bypassing getters and setters can violate encapsulation principles, making the code harder to maintain or evolve.
+  - **Tooling**: Some tools and libraries might expect getters and setters, leading to compatibility issues.
+  - **Validation and Logic**: Getters and setters are often used to include validation or additional logic which can’t be included if they are omitted.
+
+In conclusion, while JPA does not strictly require getters and setters anymore, whether to use them depends on the specific requirements of your project and the tools and frameworks you are using. For maximum compatibility and maintainability, many developers still prefer using them, but for cleaner and more modern codebases, omitting them with appropriate strategies (like Lombok or records) is becoming more common.
+
+## References
 
 1. [Spring Data JPA Projections with Code Examples](https://medium.com/@bubu.tripathy/spring-data-jpa-projections-cc5f9289089f)
 
