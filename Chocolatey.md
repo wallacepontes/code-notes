@@ -609,6 +609,8 @@ $ choco install postman openssl yarn opera anydesk maven openjdk8 openjdk tortoi
 choco install pgadmin4 openoffice nvm sqlite soapui rabbitmq mobaxterm mongodb -y 
 # 6
 choco install forticlientvpn sublimetext3 openssl powerbi -y
+
+choco install archi -y
 ```
 
 ## References
