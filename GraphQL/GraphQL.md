@@ -17,6 +17,7 @@
 		- [Imagine this example where a mobile application shipped a new feature that causes an unexpected table scan of a critical database table of a backend service. This could bring the database down as soon as the new application goes live.](#imagine-this-example-where-a-mobile-application-shipped-a-new-feature-that-causes-an-unexpected-table-scan-of-a-critical-database-table-of-a-backend-service-this-could-bring-the-database-down-as-soon-as-the-new-application-goes-live)
 		- [The cost to safeguard risks like this must be factored in when considering GraphQL.](#the-cost-to-safeguard-risks-like-this-must-be-factored-in-when-considering-graphql)
 		- [How about mutation and subscription](#how-about-mutation-and-subscription)
+	- [OpenAPI Specification](#openapi-specification)
 	- [Videos](#videos)
 	- [References](#references)
 
@@ -201,6 +202,17 @@ Both mutation and subscription are powerful features of GraphQL that allow for a
 It's also important to consider the scalability implications of using subscriptions, as real-time updates can put a heavy load on the server if not handled properly. To mitigate these risks, it's essential to have proper testing and monitoring in place, as well as to design the system with scalability in mind.
 
 Overall, mutations and subscriptions are useful features in GraphQL, but it's important to weigh the costs and benefits of using them, and to implement them in a secure and scalable manner.
+
+
+## OpenAPI Specification
+
+OpenAPI Specification (formerly Swagger Specification) is a format used to describe REST APIs, not GraphQL APIs.
+
+Here's why:
+- **OpenAPI describes RESTful principles**: It focuses on defining endpoints, HTTP methods (GET, POST, PUT, DELETE), request/response structures, and parameters, which are core concepts of REST.
+- **GraphQL uses a different paradigm**: GraphQL uses a query language and a single endpoint to fetch data, allowing clients to request precisely what they need, which is fundamentally different from the resource-based approach of REST.
+
+While tools and techniques exist to generate GraphQL schemas from OpenAPI specifications, or to expose REST APIs as GraphQL, OpenAPI itself is intrinsically tied to the description of RESTful interfaces.
 
 ## Videos
  * [GraphQL vs REST: Which is Better for APIs?](https://www.youtube.com/watch?v=PTfZcN20fro)
