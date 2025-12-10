@@ -1,10 +1,18 @@
-# Frontend - NodeJS
+# NodeJS
+
+## Table of Contents
+- [NodeJS](#nodejs)
+	- [Table of Contents](#table-of-contents)
+	- [NodeJS](#nodejs-1)
+		- [What is Node.js used for?](#what-is-nodejs-used-for)
+		- [why use Node.js and npm with nginx in docker?](#why-use-nodejs-and-npm-with-nginx-in-docker)
+		- [Videos](#videos)
 
 ## NodeJS
 
 [NodeJS on dockerhub](https://hub.docker.com/_/node)
 
-## What is Node.js used for?
+### What is Node.js used for?
 
 Node.js is an open-source, cross-platform JavaScript runtime environment that allows developers to build scalable network applications. It uses an event-driven, non-blocking I/O model, making it lightweight and efficient, particularly for real-time applications that run across distributed devices. Node.js is commonly used for various purposes, including:
 
@@ -22,7 +30,7 @@ Node.js is an open-source, cross-platform JavaScript runtime environment that al
 
 Node.js has gained popularity for its performance, scalability, and the ability to handle a large number of concurrent connections, making it a popular choice for developing various types of applications and software solutions.
 
-## why use Node.js and npm with nginx in docker?
+### why use Node.js and npm with nginx in docker?
 
 Using Node.js, npm, and Nginx together in a Docker environment can provide a powerful combination for building and deploying modern web applications. Each component serves a specific purpose within the software development and deployment process:
 
@@ -36,7 +44,7 @@ When used together in a Docker environment, Node.js and npm can be used to build
 
 Using this combination allows developers to build and deploy scalable, performant, and easily manageable web applications that leverage the strengths of each component. Additionally, Docker provides a consistent and reliable way to package, deploy, and manage the entire application stack across different environments.
 
-## Videos
+### Videos
  * [Node.js: The Documentary | An origin story](https://www.youtube.com/watch?v=LB8KwiiUGy0)
 	> [<img src="https://img.youtube.com/vi/LB8KwiiUGy0/0.jpg" width="200">](https://www.youtube.com/watch?v=LB8KwiiUGy0 "Node.js: The Documentary | An origin story by Honeypot 192,421 views 1 hour, 2 minutes")
  * [How to Detect Keypress in Node.js | Capture Keypress Nodejs](https://www.youtube.com/watch?v=MO6RjlB81P8)
