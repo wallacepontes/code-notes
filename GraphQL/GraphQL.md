@@ -239,4 +239,7 @@ While tools and techniques exist to generate GraphQL schemas from OpenAPI specif
 2, https://blog.sourced-bvba.be/article/2021/04/23/why-graphql/
 3. https://graphql.org/
 4. https://www.linkedin.com/feed/update/urn:li:activity:7011345528659562497/
-5. 
+5. https://www.xolv.io/blog/how-to-move-from-bffs-to-graphql-federation
+6. https://thenewstack.io/graphql-break-free-of-backend-for-frontend-sprawl/?ref=xolvio.ghost.io
+7. https://apis.guru/graphql-voyager/
+8. 
