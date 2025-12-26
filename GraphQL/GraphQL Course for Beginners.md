@@ -16,6 +16,7 @@
     - [#7 - Related Data](#7---related-data)
     - [#8 - Mutations (Adding \& Deleting Data)](#8---mutations-adding--deleting-data)
     - [#9 - Update Mutation](#9---update-mutation)
+    - [#10 - Operations Apollo Federation](#10---operations-apollo-federation)
   - [Course Presentation: GraphQL for Beginners](#course-presentation-graphql-for-beginners)
     - [Slide 1: Welcome to GraphQL: The Cutting Edge Query Language](#slide-1-welcome-to-graphql-the-cutting-edge-query-language)
     - [Slide 2: Understanding GraphQL Fundamentals](#slide-2-understanding-graphql-fundamentals)
@@ -379,6 +380,110 @@ const resolvers = {
   }
 }
 ```
+
+---
+
+### #10 - Operations Apollo Federation
+
+- Games Query
+
+```js
+//Operation
+query GamesQuery {
+  games{
+    id,
+    title,
+    platform
+  }
+}
+```
+
+- Review Query
+
+```js
+//Operation
+query ReviewQuery($id:ID!) {
+  review(id: $id) {
+    rating,
+    game {
+      title,
+      platform,
+      reviews {
+        rating,
+        content
+      }
+    }
+    author {
+      name,
+      verified
+    }
+  }
+}
+
+//Variables
+{
+  "id": "1"
+}
+```
+
+- DeleteMutation
+
+```js
+//Operation
+mutation DeleteMutation($id: ID!) {
+  deleteGame(id: $id) {
+    id,
+    title,
+    platform
+  }
+}
+
+//Variables
+{
+  "id": "2"
+}
+```
+
+- AddMutation
+
+```js
+//Operation
+mutation AddMutation($game: AddGameInput!) {
+  addGame(game: $game) {
+    id,
+    title,
+    platform
+  }
+}
+
+//Variables
+{
+  "game": {
+    "title": "a new game",
+    "platform": ["Switch", "ps5"]
+  }
+}
+```
+
+- EditMutation
+
+```js
+//Operation
+mutation EditMutation($edits: EditGameInput!, $id: ID!) {
+  updateGame(edits: $edits, id: $id) {
+    title,
+    platform
+  }
+}
+
+// Variables
+{
+  "edits": {
+    "platform": ["dark too"]
+  },
+  "id": "3"
+}
+``` 
 
 ---
 
