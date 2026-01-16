@@ -94,50 +94,103 @@ NestJS is often called the "**Angular for the backend**" because of its focus on
 - MODULARITY
 - REST API
 - TYPESCRIPT
-- DOCUMENTATION
+- DOCUMENTATION (very good on security)
 - GRAPHQL
 - POPULARITY / COMMUNITY
 - [npmtrends nestjs](https://npmtrends.com/@adonisjs/core-vs-@feathersjs/feathers-vs-@hapi/hapi-vs-@nestjs/core-vs-koa-vs-meteor-vs-sails)
 
+Plus, employers really love it because it brings architecture structure. And it's easier to hire developers because they don't need to learn a new custom architecture every time they are on boarded on a Express GS project.
+
 ### **(0:03:35) What we are building**
+
 The project is a **CRUD API for bookmarks**. Users will be able to create, read, update, and delete bookmark resources.
 
+- REST API with NESTJS
+- CRUD API
+- Bookmarks API
+
 ### **(0:03:55) NestJS project setup**
-1.  **Install the CLI:** Use `npm install -g @nestjs/cli`.
-2.  **Create Project:** Run `nest new project-name`.
-3.  **Cleanup:** Remove default files like `app.controller.ts` and `app.service.ts` to start from a clean slate.
-4.  **Dev Mode:** Run `yarn start:dev` to enable file watching and automatic recompilation.
+
+0. **Install the NODEJS:** We need to have NODEJS installed first. (LTS)
+1. **Install the CLI:** Use `npm install -g @nestjs/cli`.
+2. **Create Project:** Run `nest new project-name`.
+3. **Cleanup:** Remove default files like `app.controller.ts` and `app.service.ts` to start from a clean slate.
+4. **Dev Mode:** Run `yarn start:dev` to enable file watching and automatic recompilation.
 
 ### **(0:05:55) Modules**
+
 Modules are classes annotated with the **`@Module` decorator**, which adds metadata describing the module's structure. They are the building blocks of NestJS, used to organize the application into **feature-based modules** (e.g., Auth, User, Bookmarks).
 
+[![Application Module](https://docs.nestjs.com/assets/Modules_1.png)](https://docs.nestjs.com/modules)
+
+> **Hint**
+> To create a module using the CLI, simply execute the `$ nest g module cats` command.
+> This is particularly important as the application or team grows, and it aligns with the **SOLID** principles.
+
+In Nest, modules are singletons by default, and thus you can share the same instance of any provider between multiple modules effortlessly. This not only reduces memory consumption but also leads to more predictable behavior, as all modules share the same instance, making it easier to manage shared states or resources. This is one of the key benefits of modularity and dependency injection in frameworks like NestJS—allowing services to be efficiently shared throughout the application.
+
+[![Shared Module](https://docs.nestjs.com/assets/Shared_Module_1.png)](https://docs.nestjs.com/modules#shared-modules)
+
+> The `@Global()` decorator makes the module global-scoped. Global modules should be registered only once, generally by the root or core module.
+> 
+> **Hint** Making everything global is not recommended as a design practice. While global modules can help reduce boilerplate, it's generally better to use the imports array to make a module's API available to other modules in a controlled and clear way. This approach provides better structure and maintainability, ensuring that only the necessary parts of the module are shared with others while avoiding unnecessary coupling between unrelated parts of the application.
+
 ### **(0:15:30) Auth module**
+
 The Auth module handles user creation and login. While the CLI can generate modules (`nest g module auth`), creating them manually at first helps build **muscle memory** regarding the decorator syntax and file naming conventions (e.g., `auth.module.ts`).
 
 ### **(0:19:50) Dependency injection**
+
 Dependency Injection (DI) is a core NestJS concept where the framework handles the **instantiation and management** of classes. Instead of manually creating a `new AuthService()`, you simply define it in a controller's constructor. This makes dependency management significantly easier.
 
 ### **(0:20:30) Auth controller**
+
 Controllers handle **incoming requests** and return responses. In the `AuthController`, decorators like **`@Post('signup')`** and **`@Post('signin')`** define the API endpoints.
 
 ### **(0:26:50) Setting up Postgres in Docker**
+
 To avoid manual database installation, **Docker Compose** is used to spawn a **Postgres 13** container. The configuration includes environment variables for the user, password, and database name (e.g., "nest").
 
+```bash
+$ docker ps
+$ docker --version
+$ docker compose up dev-db -d
+$ docker ps
+$ docker logs ...
+```
+
 ### **(0:29:10) Setting up Prisma**
-Prisma is a modern **ORM/Query Builder**. 
-*   **Installation:** Install `prisma` as a dev dependency and `@prisma/client` as a regular dependency.
-*   **Initialization:** Run `npx prisma init` to generate a schema file and an environment variable file.
+
+[Prisma](https://www.prisma.io/) is a modern **ORM/Query Builder**.
+
+- **Installation:** Install `prisma` as a dev dependency and `@prisma/client` as a regular dependency. `$ yarn add -D prisma` and `$ yarn add @prisma/client`
+- **Initialization:** Run `npx prisma init` to generate a schema file and an environment variable file.
 
 ### **(0:32:10) User & bookmark models**
+
 Models are defined in the `schema.prisma` file.
-*   **User:** Contains fields like `email` (unique), `hash` (password), and optional names.
-*   **Bookmark:** Includes a `title`, `link`, and a **many-to-one relationship** to a User.
+
+- **User:** Contains fields like `email` (unique), `hash` (password), and optional names.
+- **Bookmark:** Includes a `title`, `link`, and a **many-to-one relationship** to a User.
 
 ### **(0:35:50) Running Prisma migrations**
-Use `npx prisma migrate dev` to transform the schema into **SQL migrations**. This command also generates **TypeScript types** based on your models, allowing you to use `User` or `Bookmark` types directly in your code.
+
+Let's press help `npx prisma --help` to get some help for several commands. Use `npx prisma migrate dev` to transform the schema into **SQL migrations**. This command also generates **TypeScript types** based on your models, allowing you to use `User` or `Bookmark` types directly in your code.
+
+```bash
+$ npx prisma --help
+$ npx prisma migrate dev
+> Enter a name for the new migration: » init
+```
 
 ### **(0:40:10) Prisma module**
+
 A dedicated `PrismaModule` is created to encapsulate the database connection. By adding the **`@Global()` decorator**, the `PrismaService` becomes available to all other modules in the app without needing to import it repeatedly.
+
+```bash
+$ nest g module prisma
+$ nest g service prisma --no-spec
+```
 
 ### **(0:52:10) Using Auth DTOs**
 **Data Transfer Objects (DTOs)** define the shape of data for requests. Using a class instead of an interface allows for **runtime validation**.
@@ -223,3 +276,6 @@ The final tests cover the full **CRUD cycle** for bookmarks. It verifies that bo
 3. https://dev.to/devaugusto/como-solucionar-o-erro-execucao-de-scripts-desabilitada-neste-sistema-execution-scripts-is-disabled-on-this-system-error-25ch
 4. https://koajs.com/
 5. https://npmtrends.com/@hapi/hapi-vs-@nestjs/core-vs-koa-vs-next
+6. https://medium.com/@ignatovich.dm/express-js-vs-fastify-comparison-for-building-node-js-applications-0a6c8aca0136
+7.  https://docs.nestjs.com/recipes/prisma
+8.  

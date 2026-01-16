@@ -141,5 +141,3 @@ This hybrid approach is common in modern **.NET**, **Java (Spring)**, and **Node
 
 ---
 
-Would you like me to show a **code structure example** comparing both (in Java Spring Boot or Node.js)?
-That makes the differences much clearer in practice.
